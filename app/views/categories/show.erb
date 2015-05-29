@@ -1,0 +1,13 @@
+<h1>Category <%= @category.name.capitalize %>
+  <form action="/categories/<%= @category.id %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="delete">
+  </form>
+  <a href="/categories/<%= @category.id %>/posts/new">Create a new post</a>
+</h1>
+
+<% @posts.each do |p| %>
+  <a href="/posts/<%= p.id %>">
+    <p><%= p.title %></p>
+  </a>
+<% end %>

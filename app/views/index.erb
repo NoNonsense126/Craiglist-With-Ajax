@@ -1,0 +1,7 @@
+<h1>Welcome to YouJingList!</h1>
+
+<% @categories.each do |c| %>
+  <a href="/categories/<%= c.id %>">
+    <p><%= c.name %></p>
+  </a>
+<% end %>

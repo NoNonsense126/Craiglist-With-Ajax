@@ -1,0 +1,9 @@
+<h1><%= @post.title %></h1>
+<h6>from category <%= @category.name %></h6>
+
+<p><%= @post.body %></p>
+
+
+<a href="/posts/<%= @post.id %>/edit">
+  <p>Edit Post</p>
+</a>
