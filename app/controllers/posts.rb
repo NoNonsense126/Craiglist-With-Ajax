@@ -12,9 +12,9 @@ post '/categories/:category_id/posts' do
   # @post.category_id = @category.id
   @post = @category.posts.build(params[:post])
   if @post.save
-    redirect to "/posts/#{@post.id}"
+    @post.to_json
   else
-    erb :"posts/new"
+    {result: "failed"}.to_json
   end
 
 end

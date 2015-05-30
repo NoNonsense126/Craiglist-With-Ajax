@@ -21,6 +21,7 @@ end
 get '/categories/:id' do
   @category = Category.find(params[:id])
   @posts = @category.posts
+  @post = @category.posts.build
   erb :'categories/show'
 end
 

@@ -3,11 +3,58 @@
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" value="delete">
   </form>
-  <a href="/categories/<%= @category.id %>/posts/new">Create a new post</a>
+
 </h1>
 
-<% @posts.each do |p| %>
-  <a href="/posts/<%= p.id %>">
-    <p><%= p.title %></p>
-  </a>
-<% end %>
+<div id="post-area">
+  <% @posts.each do |p| %>
+    <a href="/posts/<%= p.id %>">
+      <p><%= p.title %></p>
+    </a>
+  <% end %>
+</div>
+
+
+
+<a id="reveal-form" href="/categories/<%= @category.id %>/posts/new">Create a new post</a>
+
+<div>
+  <form id="create-post-form" action="/categories/<%= @category.id %>/posts" method="POST" style="display:none;">
+    <label>Post title:</label>
+    <input type="text" name="post[title]" value="<%= @post.title %>">
+    <br />
+    <label>Post body:</label>
+    <textarea name="post[body]" rows="20" cols="50"><%= @post.body %></textarea>
+    <br />
+    <input type="submit" value="Create my awesome post">
+  </form>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#reveal-form").click(function(event){
+      event.preventDefault();
+      $("#create-post-form").css("display", "initial")
+    })
+
+    $("#create-post-form").submit(function(event){
+      event.preventDefault();
+      var self = $(this);
+      var action = self.attr("action");
+      var method = self.attr("method");
+      var data = self.serialize();
+      $.ajax({
+        type: method,
+        url: action,
+        data: data,
+        dataType: "json"
+      })
+      .done(function(response){
+        if(response["result"] === undefined){
+          $("#post-area").append('<a href="/posts/' + response["id"] + '"><p>' + response["title"] + '</p></a>')
+        }        
+      })
+    })
+  })
+
+</script>
